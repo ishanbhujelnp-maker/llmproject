@@ -19,3 +19,9 @@ data/
 frontend/node_modules/
 frontend/dist/
 frontend/.vite/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
