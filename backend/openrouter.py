@@ -2,7 +2,7 @@
 
 import httpx
 from typing import List, Dict, Any, Optional
-from .config import OPENROUTER_API_KEY, OPENROUTER_API_URL
+from .config import OPENROUTER_API_KEY, OPENROUTER_API_URL, OLLAMA_API_URL
 
 
 async def query_model(
@@ -11,30 +11,42 @@ async def query_model(
     timeout: float = 120.0
 ) -> Optional[Dict[str, Any]]:
     """
-    Query a single model via OpenRouter API.
+    Query a single model (either via OpenRouter API or local Ollama).
 
     Args:
-        model: OpenRouter model identifier (e.g., "openai/gpt-4o")
+        model: Model identifier (e.g., "openai/gpt-4o" or "ollama/llama3")
         messages: List of message dicts with 'role' and 'content'
         timeout: Request timeout in seconds
 
     Returns:
         Response dict with 'content' and optional 'reasoning_details', or None if failed
     """
-    headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-        "Content-Type": "application/json",
-    }
+    is_ollama = model.startswith("ollama/")
+
+    if is_ollama:
+        url = OLLAMA_API_URL
+        headers = {
+            "Content-Type": "application/json",
+        }
+        # Strip the 'ollama/' prefix for Ollama call
+        payload_model = model.split("ollama/", 1)[1]
+    else:
+        url = OPENROUTER_API_URL
+        headers = {
+            "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+            "Content-Type": "application/json",
+        }
+        payload_model = model
 
     payload = {
-        "model": model,
+        "model": payload_model,
         "messages": messages,
     }
 
     try:
         async with httpx.AsyncClient(timeout=timeout) as client:
             response = await client.post(
-                OPENROUTER_API_URL,
+                url,
                 headers=headers,
                 json=payload
             )

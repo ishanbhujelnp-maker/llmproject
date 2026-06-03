@@ -1,25 +1,25 @@
 .stage3 {
-  background: #f0fff0;
-  border-color: #c8e6c8;
+  margin-top: 16px;
+  background: #ffffff;
 }
 
 .final-response {
   background: #ffffff;
-  padding: 20px;
-  border-radius: 6px;
-  border: 1px solid #c8e6c8;
+  padding: 24px 0;
+  border-top: 2px solid #0f172a; /* Sophisticated solid thick dark slate line to highlight the final consensus conclusion */
 }
 
 .chairman-label {
-  color: #2d8a2d;
+  color: #475569;
   font-size: 12px;
   font-family: monospace;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   font-weight: 600;
+  display: inline-block;
 }
 
 .final-text {
-  color: #333;
-  line-height: 1.7;
-  font-size: 15px;
+  color: #0f172a;
+  line-height: 1.75;
+  font-size: 15.5px;
 }

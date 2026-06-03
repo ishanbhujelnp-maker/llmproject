@@ -8,16 +8,21 @@ load_dotenv()
 # OpenRouter API key
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
-# Council members - list of OpenRouter model identifiers
+# Ollama API URL (local)
+OLLAMA_API_URL = os.getenv("OLLAMA_API_URL", "http://localhost:11434/v1/chat/completions")
+
+# Council members - list of model identifiers (OpenRouter or local Ollama models)
+# To use a local Ollama model, prefix it with 'ollama/' (e.g. 'ollama/llama3')
 COUNCIL_MODELS = [
-    "openai/gpt-5.1",
-    "google/gemini-3-pro-preview",
-    "anthropic/claude-sonnet-4.5",
-    "x-ai/grok-4",
+    "ollama/qwen3-coder:480b-cloud",
+    "ollama/gpt-oss:120b-cloud",
+    "ollama/glm-4.7:cloud",
+    "ollama/glm-4.6:cloud",
+    "ollama/qwen3-coder-next:cloud"
 ]
 
 # Chairman model - synthesizes final response
-CHAIRMAN_MODEL = "google/gemini-3-pro-preview"
+CHAIRMAN_MODEL = "ollama/qwen3-coder:480b-cloud"
 
 # OpenRouter API endpoint
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
